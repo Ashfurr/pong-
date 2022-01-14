@@ -24,8 +24,8 @@ class Tableau1 extends Phaser.Scene {
 
     create() {
         let vitball=Phaser.Math.Between(200, 400);
-        this.scoreText = this.add.text(100, 50, 'score: 0', { fontSize: '32px', fill: '#000' });
-        this.scoreText2 = this.add.text(1000, 50, 'score: 0', { fontSize: '32px', fill: '#000' });
+        this.scoreText = this.add.text(110, 50, 'score: 0', { fontSize: '32px', fill: '#ffffff' });
+        this.scoreText2 = this.add.text(1000, 50, 'score: 0', { fontSize: '32px', fill: '#ffffff' });
         this.wall1 = this.physics.add.sprite(512, 10, 'square')
         this.wall2 = this.physics.add.sprite(512, 710, 'square')
         this.wall1.scaleY = 0.1
@@ -35,11 +35,11 @@ class Tableau1 extends Phaser.Scene {
         this.player1 = this.physics.add.sprite(100, 360, 'square')
         this.player1.scaleX = 0.02
         this.player1.scaleY = 0.5
-        this.player1.setTintFill(0x00000)
+        this.player1.setTintFill(0xFFFFFF)
         this.player2 = this.physics.add.sprite(1180, 360, 'square')
         this.player2.scaleX = 0.02
         this.player2.scaleY = 0.5
-        this.player2.setTintFill(0x00000)
+        this.player2.setTintFill(0xFFFFFF)
         this.ball = this.physics.add.sprite(500, 360, 'circle')
         this.ball.scale = 0.05
         this.ball.setVelocity(vitball, vitball*2)
