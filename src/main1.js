@@ -22,7 +22,7 @@ let gameConfig = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug:false
+            debug:true
         }
     },
     scene: new Tableau1()
