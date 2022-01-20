@@ -20,11 +20,31 @@ a:visited{
 #game{
     margin-bottom: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    min-height: 90vh;
+    min-height: 105vh;
 
 }
 canvas{
     outline: 1px solid #333;
+}
+#scores{
+    color: #ffffff;
+    font-size : 5vw;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.score{
+    color: #000000
+}
+.name{
+    font-size: 3vw;
+}
+
+#scores >* {
+    margin: 1vw;
 }
