@@ -52,8 +52,9 @@ class Tableau1 extends Phaser.Scene {
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
          this.ball.setVelocityY(this.ball.body.velocity.y+this.coeff*50)
-         this.ball.setVelocityX(this.ball.body.velocity.x*1.1)
+         this.ball.setVelocityX(this.ball.body.velocity.x*1.05^2)
         this.particlescolli()
+     console.log(this.ball.body.velocity.x)
  }
 
     create() {
