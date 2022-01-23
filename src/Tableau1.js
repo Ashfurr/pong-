@@ -52,6 +52,7 @@ class Tableau1 extends Phaser.Scene {
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
          this.ball.setVelocityY(this.ball.body.velocity.y+this.coeff*50)
+
          this.ball.setVelocityX(this.ball.body.velocity.x*1.05^2)
         this.particlescolli()
      console.log(this.ball.body.velocity.x)
@@ -67,12 +68,13 @@ class Tableau1 extends Phaser.Scene {
         this.Hscreen=720
         this.wall1 = this.physics.add.sprite(0, 0, 'square').setOrigin(0.0)
         this.wall2 = this.physics.add.sprite(0, 700, 'square').setOrigin(0.0)
-        this.wall1.setDisplaySize(1280,20)
-        this.wall2.setDisplaySize(1280,20)
+
         this.player1 = this.physics.add.sprite(100, this.Hscreen/2-50, 'square2').setOrigin(0,0)
-        this.player1.setTintFill(0xFFFFFF)
+        this.player1.setTintFill(0xab77a3)
+
         this.player2 = this.physics.add.sprite(1180, this.Hscreen/2-50, 'square2').setOrigin(0,0)
-        this.player2.setTintFill(0xFFFFFF)
+        this.player2.setTintFill(0xab77a3)
+
         this.ball = this.physics.add.sprite(this.Wscreen/2, this.Hscreen/2, 'circle')
         this.ball.scale = 0.05
         this.ball.setVelocityX(Math.random()>0.5?-200:200)
@@ -102,7 +104,6 @@ class Tableau1 extends Phaser.Scene {
             frame: { frames: [ 'red', 'green', 'blue' ], cycle: true },
             scale: { start: 0.4, end: 0.1},
             //tint: { start: 0xff945e, end: 0xff945e },
-
             blendMode: 'ADD',
             frequency: 10,
             x: me.ball.x,

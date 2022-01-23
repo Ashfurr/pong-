@@ -1,3 +1,5 @@
+let gameOptions = {
+        circleColors: [0xff0099, 0xf3f315, 0x83f52c, 0x630dd0]}
 let gameConfig = {
     type: Phaser.AUTO,
     width: 1280,
