@@ -9,19 +9,6 @@ body{
     background-color: #454341;
     text-align: center;
 }
-a{
-    color: #050000;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: color 1s;
-}
-a:hover{
-    color: #ff0000;
-    text-decoration: underline;
-}
-a:visited{
-    color: #880000;
-}
 #Bg{
     display: flex;
 }
