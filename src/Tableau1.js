@@ -9,6 +9,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('circle', 'asset/cercle.png')
         this.load.image('white', 'asset/white.png')
         this.load.image('effect', 'asset/effect.png')
+        this.load.audio('music', ['asset/music.mp3'])
         this.load.atlas('flares', 'asset/flares.png', 'asset/flares.json');
 
     }
@@ -41,7 +42,8 @@ class Tableau1 extends Phaser.Scene {
             frequency: 200,
             maxParticles: 5,
             x: this.ball.x,
-            y: this.ball.y
+            y: this.ball.y,
+
         });
     }
     reset() {
@@ -72,60 +74,74 @@ class Tableau1 extends Phaser.Scene {
         this.particlescolli()
 
  }
+ startF(){
+        this.text.destroy()
+     this.musicBg.mute=false
+     this.start=1
+     if (this.start==1) {
+         this.joueurGauche = new Joueur('Player 1', 'joueurGauche')
+         this.joueurDroite = new Joueur('Player 2', 'joueurDroite')
+         let me = this
+         this.wall1 = this.physics.add.sprite(0, 0, 'square').setOrigin(0.0)
+         this.wall2 = this.physics.add.sprite(0, 700, 'square').setOrigin(0.0)
+
+         this.player1 = this.physics.add.sprite(100, this.Hscreen / 2 - 50, 'square2').setOrigin(0, 0)
+         this.player1.setTintFill(0xab77a3)
+
+         this.player2 = this.physics.add.sprite(1180, this.Hscreen / 2 - 50, 'square2').setOrigin(0, 0)
+         this.player2.setTintFill(0xab77a3)
+
+         this.ball = this.physics.add.sprite(this.Wscreen / 2, this.Hscreen / 2, 'circle')
+         this.ball.scale = 0.05
+         this.ball.setVelocityX(Math.random() > 0.5 ? -200 : 200)
+         this.ball.setBounce(1, 1)
+         this.ball.visible = false
+         this.physics.add.collider(this.wall2, this.ball, function () {
+             me.particlescolli()
+         })
+         this.physics.add.collider(this.wall1, this.ball, function () {
+             me.particlescolli()
+         })
+         this.physics.add.collider(this.player1, this.ball, function () {
+             me.renvoie(me.player1)
+         })
+         this.physics.add.collider(this.player2, this.ball, function () {
+             me.renvoie(me.player2)
+         })
+         this.wall2.setImmovable(true)
+         this.wall1.setImmovable(true)
+         this.player1.setImmovable(true)
+         this.player2.setImmovable(true)
+         this.player1Speed = 0
+         this.player2Speed = 0
+         this.score = 0
+         let particles2 = this.add.particles('flares');
+         let particle = particles2.createEmitter({
+             alpha: {start: 1, end: 0},
+             frame: {frames: ['red', 'green', 'blue'], cycle: true},
+             scale: {start: 0.4, end: 0.1},
+             //tint: { start: 0xff945e, end: 0xff945e },
+             blendMode: 'ADD',
+             frequency: 10,
+             x: me.ball.x,
+             y: this.ball.y
+         });
+         particle.startFollow(this.ball)
+
+     }
+
+ }
 
     create() {
-
-
-        this.joueurGauche = new Joueur('Player 1','joueurGauche')
-        this.joueurDroite = new Joueur('Player 2','joueurDroite')
-        let me =this
-        this.Wscreen=1280
-        this.Hscreen=720
-        this.wall1 = this.physics.add.sprite(0, 0, 'square').setOrigin(0.0)
-        this.wall2 = this.physics.add.sprite(0, 700, 'square').setOrigin(0.0)
-
-        this.player1 = this.physics.add.sprite(100, this.Hscreen/2-50, 'square2').setOrigin(0,0)
-        this.player1.setTintFill(0xab77a3)
-
-        this.player2 = this.physics.add.sprite(1180, this.Hscreen/2-50, 'square2').setOrigin(0,0)
-        this.player2.setTintFill(0xab77a3)
-
-        this.ball = this.physics.add.sprite(this.Wscreen/2, this.Hscreen/2, 'circle')
-        this.ball.scale = 0.05
-        this.ball.setVelocityX(Math.random()>0.5?-200:200)
-        this.ball.setBounce(1, 1)
-        this.ball.visible=false
-        this.physics.add.collider(this.wall2, this.ball,function (){
-            me.particlescolli()})
-        this.physics.add.collider(this.wall1, this.ball,function (){
-            me.particlescolli()
-        })
-        this.physics.add.collider(this.player1, this.ball,function (){
-            me.renvoie(me.player1)
-        })
-        this.physics.add.collider(this.player2, this.ball,function (){
-            me.renvoie(me.player2)})
-        this.wall2.setImmovable(true)
-        this.wall1.setImmovable(true)
-        this.player1.setImmovable(true)
-        this.player2.setImmovable(true)
-        this.player1Speed = 0
-        this.player2Speed = 0
         this.initKeyboard()
-        this.score=0
-        let particles2 = this.add.particles('flares');
-        let particle=particles2.createEmitter({
-            alpha: { start: 1, end: 0 },
-            frame: { frames: [ 'red', 'green', 'blue' ], cycle: true },
-            scale: { start: 0.4, end: 0.1},
-            //tint: { start: 0xff945e, end: 0xff945e },
-            blendMode: 'ADD',
-            frequency: 10,
-            x: me.ball.x,
-            y: this.ball.y
-        });
-        particle.startFollow(this.ball)
-
+        this.start=0
+        this.Wscreen = 1280
+        this.Hscreen = 720
+        this.musicBg=this.sound.add('music')
+        this.musicBg.play()
+        this.musicBg.volume=0.2
+        this.musicBg.mute=true
+        this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
 
     }
 
@@ -145,6 +161,7 @@ class Tableau1 extends Phaser.Scene {
                     case Phaser.Input.Keyboard.KeyCodes.N:
                         me.player2.setVelocityY(450)
                         break;
+
                 }
             });
             this.input.keyboard.on('keyup', function (kevent) {
@@ -164,13 +181,20 @@ class Tableau1 extends Phaser.Scene {
                     case Phaser.Input.Keyboard.KeyCodes.R:
                         me.resetScore()
                         break;
+                    case Phaser.Input.Keyboard.KeyCodes.SPACE:
+                        if(me.start==0) {
+                            me.startF()
+                            console.log('space')
+                            break;
+                        }
                 }
             })
 
         }
 
-        update()
-        {
+        update(){
+        if(this.start==1){
+
             if(this.player1.y<=20){
                 this.player1.y=20
 
@@ -195,6 +219,6 @@ class Tableau1 extends Phaser.Scene {
             if(this.ball.x<-10){
                 this.win(this.joueurDroite)
             }
-        }
+        }}
     }
 
