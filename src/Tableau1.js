@@ -143,7 +143,6 @@ class Tableau1 extends Phaser.Scene {
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
         this.musicBg.mute=true
-        this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
 
     }
