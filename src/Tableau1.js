@@ -33,7 +33,7 @@ class Tableau1 extends Phaser.Scene {
 
         particles2.createEmitter({
             alpha: { start: 1, end: 0 },
-            scale: { start: 0.5, end: 1},
+            scale: { start: 0.2, end: 0.7},
             //tint: { start: 0xff945e, end: 0xff945e },
             speed: 200,
             rotate: { min: -180, max: 180 },
@@ -138,9 +138,9 @@ class Tableau1 extends Phaser.Scene {
         this.Wscreen = 1280
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
+        this.musicBg.mute=true
         this.musicBg.play()
         this.musicBg.volume=0.2
-        this.musicBg.mute=true
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
 
     }

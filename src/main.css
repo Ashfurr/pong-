@@ -1,5 +1,6 @@
+
 body{
-    font-family: Arial, sans-serif;
+    font-family: "lostwage", Arial, sans-serif;
     font-size: 12px;
     background-color: #454341;
     text-align: center;
@@ -17,20 +18,23 @@ a:hover{
 a:visited{
     color: #880000;
 }
+#Bg{
+    display: flex;
+}
 #game{
     margin-bottom: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    min-height: 105vh;
+    min-height: 95vh;
 
 }
 canvas{
     outline: 1px solid #333;
 }
 #scores{
-    color: #ffffff;
-    font-size : 5vw;
+    color: #c8ff00;
+    font-size : 3vw;
     display: flex;
     justify-content: center;
     position: absolute;
@@ -39,10 +43,10 @@ canvas{
 }
 
 .score{
-    color: #000000
+    color: rgba(116, 255, 2, 0.8)
 }
 .name{
-    font-size: 3vw;
+    font-size: 2vw;
 }
 
 #scores >* {
