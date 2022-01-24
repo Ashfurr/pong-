@@ -80,6 +80,7 @@ class Tableau1 extends Phaser.Scene {
  startF(){
         this.text.destroy()
      this.musicBg.mute=false
+     this.musicBg.play()
      this.start=1
      if (this.start==1) {
          this.joueurGauche = new Joueur('Player 1', 'joueurGauche')
@@ -142,7 +143,6 @@ class Tableau1 extends Phaser.Scene {
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
         this.musicBg.mute=true
-        this.musicBg.play()
         this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
 
