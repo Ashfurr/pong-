@@ -70,17 +70,16 @@ class Tableau1 extends Phaser.Scene {
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
          this.ball.setVelocityY(this.ball.body.velocity.y+this.coeff*50)
-     if (-2500<this.ball.body.x<2500) {
+     if (this.lock==0) {
          this.ball.setVelocityX(this.ball.body.velocity.x * 1.05 ^ 2)
-         console.log(this.ball.body.velocity.x)
      }
-        this.particlescolli()
-
+         console.log(this.ball.body.velocity.x)
+     this.particlescolli()
  }
  startF(){
+        this.lock=0
         this.text.destroy()
      this.musicBg.mute=false
-     this.musicBg.play()
      this.start=1
      if (this.start==1) {
          this.joueurGauche = new Joueur('Player 1', 'joueurGauche')
@@ -143,6 +142,8 @@ class Tableau1 extends Phaser.Scene {
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
         this.musicBg.mute=true
+        this.musicBg.play()
+        this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
 
     }
@@ -196,7 +197,9 @@ class Tableau1 extends Phaser.Scene {
 
         update(){
         if(this.start==1){
-
+            if(Math.abs(this.ball.body.velocity.x>2000)){
+                this.lock=1
+            }
             if(this.player1.y<=20){
                 this.player1.y=20
 
