@@ -8,6 +8,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('square2', 'asset/carre2.png')
         this.load.image('circle', 'asset/cercle.png')
         this.load.image('white', 'asset/white.png')
+        this.load.image('effect', 'asset/effect.png')
         this.load.atlas('flares', 'asset/flares.png', 'asset/flares.json');
 
     }
@@ -24,6 +25,21 @@ class Tableau1 extends Phaser.Scene {
             blendMode: 'ADD',
             frequency: 110,
             maxParticles: 1,
+            x: this.ball.x,
+            y: this.ball.y
+        });
+        let particles2 = this.add.particles('effect');
+
+        particles2.createEmitter({
+            alpha: { start: 1, end: 0 },
+            scale: { start: 0.5, end: 1},
+            //tint: { start: 0xff945e, end: 0xff945e },
+            speed: 200,
+            rotate: { min: -180, max: 180 },
+            lifespan: { min: 1000, max: 1010},
+            blendMode: 'ADD',
+            frequency: 200,
+            maxParticles: 5,
             x: this.ball.x,
             y: this.ball.y
         });
@@ -52,10 +68,9 @@ class Tableau1 extends Phaser.Scene {
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
          this.ball.setVelocityY(this.ball.body.velocity.y+this.coeff*50)
-
          this.ball.setVelocityX(this.ball.body.velocity.x*1.05^2)
         this.particlescolli()
-     console.log(this.ball.body.velocity.x)
+
  }
 
     create() {
