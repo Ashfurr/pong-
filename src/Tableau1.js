@@ -26,11 +26,10 @@ class Tableau1 extends Phaser.Scene {
             blendMode: 'ADD',
             frequency: 110,
             maxParticles: 1,
-            x: this.ball.x,
-            y: this.ball.y
+            x: this.Mball.ball.x,
+            y: this.Mball.ball.y
         });
         let particles2 = this.add.particles('effect');
-
         particles2.createEmitter({
             alpha: { start: 1, end: 0 },
             scale: { start: 0.2, end: 0.7},
@@ -41,18 +40,19 @@ class Tableau1 extends Phaser.Scene {
             blendMode: 'ADD',
             frequency: 200,
             maxParticles: 5,
-            x: this.ball.x,
-            y: this.ball.y,
+            x: this.Mball.ball.x,
+            y: this.Mball.ball.y,
 
         });
     }
     reset() {
-        this.ball.y = this.Hscreen/2
-        this.ball.x = this.Wscreen/2
-        this.ball.setVelocityX(Math.random()>0.5?-200:200)
-        this.ball.setVelocityY(0)
-        this.player1.y=this.Hscreen/2-50
-        this.player2.y=this.Hscreen/2-50
+        this.Mball.ball.y = this.Hscreen/2
+        this.Mball.ball.x = this.Wscreen/2
+        this.Mball.ball.setVelocityX(Math.random()>0.5?-200:200)
+        this.Mball.ball.setVelocityY(0)
+        this.joueurDroite.playerpad.y=this.Hscreen/2-50
+        this.joueurGauche.playerpad.y=this.Hscreen/2-50
+        this.lock=0
     }
     resetScore(){
         this.joueurDroite.score=0
@@ -66,14 +66,14 @@ class Tableau1 extends Phaser.Scene {
 
  renvoie(player){
 
-         this.rando=this.ball.y-player.y
+         this.rando=this.Mball.ball.y-player.y
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
-         this.ball.setVelocityY(this.ball.body.velocity.y+this.coeff*50)
+     this.Mball.ball.setVelocityY(this.Mball.ball.body.velocity.y+this.coeff*50)
      if (this.lock==0) {
-         this.ball.setVelocityX(this.ball.body.velocity.x * 1.05 ^ 2)
+         this.Mball.ball.setVelocityX(this.Mball.ball.body.velocity.x * 1.5)
      }
-         console.log(this.ball.body.velocity.x)
+
      this.particlescolli()
  }
  startF(){
@@ -82,54 +82,28 @@ class Tableau1 extends Phaser.Scene {
      this.musicBg.mute=false
      this.start=1
      if (this.start==1) {
-         this.joueurGauche = new Joueur('Player 1', 'joueurGauche')
-         this.joueurDroite = new Joueur('Player 2', 'joueurDroite')
+         this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80)
+         this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180)
+         this.Mball = new Ball(this, 'Mball')
          let me = this
          this.wall1 = this.physics.add.sprite(0, 0, 'square').setOrigin(0.0)
          this.wall2 = this.physics.add.sprite(0, 700, 'square').setOrigin(0.0)
-
-         this.player1 = this.physics.add.sprite(100, this.Hscreen / 2 - 50, 'square2').setOrigin(0, 0)
-         this.player1.setTintFill(0xab77a3)
-
-         this.player2 = this.physics.add.sprite(1180, this.Hscreen / 2 - 50, 'square2').setOrigin(0, 0)
-         this.player2.setTintFill(0xab77a3)
-
-         this.ball = this.physics.add.sprite(this.Wscreen / 2, this.Hscreen / 2, 'circle')
-         this.ball.scale = 0.05
-         this.ball.setVelocityX(Math.random() > 0.5 ? -200 : 200)
-         this.ball.setBounce(1, 1)
-         this.ball.visible = false
-         this.physics.add.collider(this.wall2, this.ball, function () {
+         this.physics.add.collider(this.Mball.ball, this.Mball.ball, function () {
              me.particlescolli()
          })
-         this.physics.add.collider(this.wall1, this.ball, function () {
+         this.physics.add.collider(this.wall1, this.Mball.ball, function () {
              me.particlescolli()
          })
-         this.physics.add.collider(this.player1, this.ball, function () {
-             me.renvoie(me.player1)
+         this.physics.add.collider(this.joueurGauche.playerpad, this.Mball.ball, function () {
+             me.renvoie(me.joueurGauche.playerpad)
          })
-         this.physics.add.collider(this.player2, this.ball, function () {
-             me.renvoie(me.player2)
+         this.physics.add.collider(this.joueurDroite.playerpad, this.Mball.ball, function () {
+             me.renvoie(me.joueurDroite.playerpad)
          })
          this.wall2.setImmovable(true)
          this.wall1.setImmovable(true)
-         this.player1.setImmovable(true)
-         this.player2.setImmovable(true)
-         this.player1Speed = 0
-         this.player2Speed = 0
          this.score = 0
-         let particles2 = this.add.particles('flares');
-         let particle = particles2.createEmitter({
-             alpha: {start: 1, end: 0},
-             frame: {frames: ['red', 'green', 'blue'], cycle: true},
-             scale: {start: 0.4, end: 0.1},
-             //tint: { start: 0xff945e, end: 0xff945e },
-             blendMode: 'ADD',
-             frequency: 10,
-             x: me.ball.x,
-             y: this.ball.y
-         });
-         particle.startFollow(this.ball)
+
 
      }
 
@@ -153,16 +127,16 @@ class Tableau1 extends Phaser.Scene {
             this.input.keyboard.on('keydown', function (kevent) {
                 switch (kevent.keyCode) {
                     case Phaser.Input.Keyboard.KeyCodes.S:
-                            me.player1.setVelocityY(-450)
+                            me.joueurGauche.playerpad.setVelocityY(-450)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.X:
-                        me.player1.setVelocityY(450)
+                        me.joueurGauche.playerpad.setVelocityY(450)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.J:
-                        me.player2.setVelocityY(-450)
+                        me.joueurDroite.playerpad.setVelocityY(-450)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.N:
-                        me.player2.setVelocityY(450)
+                        me.joueurDroite.playerpad.setVelocityY(450)
                         break;
 
                 }
@@ -170,16 +144,16 @@ class Tableau1 extends Phaser.Scene {
             this.input.keyboard.on('keyup', function (kevent) {
                 switch (kevent.keyCode) {
                     case Phaser.Input.Keyboard.KeyCodes.S:
-                        me.player1.setVelocityY(0)
+                        me.joueurGauche.playerpad.setVelocityY(0)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.X:
-                        me.player1.setVelocityY(0)
+                        me.joueurGauche.playerpad.setVelocityY(0)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.J:
-                        me.player2.setVelocityY(0)
+                        me.joueurDroite.playerpad.setVelocityY(0)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.N:
-                        me.player2.setVelocityY(0)
+                        me.joueurDroite.playerpad.setVelocityY(0)
                         break;
                     case Phaser.Input.Keyboard.KeyCodes.R:
                         me.resetScore()
@@ -197,31 +171,29 @@ class Tableau1 extends Phaser.Scene {
 
         update(){
         if(this.start==1){
-            if(Math.abs(this.ball.body.velocity.x>2000)){
+            if(Math.abs(this.Mball.ball.body.velocity.x>1800)){
                 this.lock=1
             }
-            if(this.player1.y<=20){
-                this.player1.y=20
+            if(this.joueurGauche.playerpad.y<=20){
+                this.joueurGauche.playerpad.y=20
 
             }
-            if(this.player1.y>=600){
-                this.player1.y=600
+            if(this.joueurGauche.playerpad.y>=600){
+                this.joueurGauche.playerpad.y=600
 
             }
-            if(this.player2.y<=20){
-                this.player2.y=20
+            if(this.joueurDroite.playerpad.y<=20){
+                this.joueurDroite.playerpad.y=20
 
             }
-            if(this.player2.y>=600){
-                this.player2.y=600
+            if(this.joueurDroite.playerpad.y>=600){
+                this.joueurDroite.playerpad.y=600
 
             }
-            this.player1.y += this.player1Speed
-            this.player2.y += this.player2Speed
-            if(this.ball.x>1280){
+            if(this.Mball.ball.x>1280){
                 this.win(this.joueurGauche)
             }
-            if(this.ball.x<-10){
+            if(this.Mball.ball.x<-10){
                 this.win(this.joueurDroite)
             }
         }}
