@@ -82,16 +82,18 @@ class Tableau1 extends Phaser.Scene {
      this.musicBg.mute=false
      this.start=1
      if (this.start==1) {
-         this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80)
-         this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180)
-         this.Mball = new Ball(this, 'Mball')
+         this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80,$("#monte2"),
+             $("#descend2"))
+         this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180,$("#monte2"),
+             $("#descend2"))
+         this.Mball = new Ball(this)
+         this.wallUp= new Wall(this,0)
+         this.wallDown= new Wall(this,700)
          let me = this
-         this.wall1 = this.physics.add.sprite(0, 0, 'square').setOrigin(0.0)
-         this.wall2 = this.physics.add.sprite(0, 700, 'square').setOrigin(0.0)
-         this.physics.add.collider(this.Mball.ball, this.Mball.ball, function () {
+         this.physics.add.collider(this.wallDown.wall, this.Mball.ball, function () {
              me.particlescolli()
          })
-         this.physics.add.collider(this.wall1, this.Mball.ball, function () {
+         this.physics.add.collider(this.wallUp.wall, this.Mball.ball, function () {
              me.particlescolli()
          })
          this.physics.add.collider(this.joueurGauche.playerpad, this.Mball.ball, function () {
@@ -100,8 +102,6 @@ class Tableau1 extends Phaser.Scene {
          this.physics.add.collider(this.joueurDroite.playerpad, this.Mball.ball, function () {
              me.renvoie(me.joueurDroite.playerpad)
          })
-         this.wall2.setImmovable(true)
-         this.wall1.setImmovable(true)
          this.score = 0
 
 
@@ -110,8 +110,11 @@ class Tableau1 extends Phaser.Scene {
  }
 
     create() {
+        this.start=1
+
+
         this.initKeyboard()
-        this.start=0
+        this.controle=new Controle()
         this.Wscreen = 1280
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
@@ -119,45 +122,19 @@ class Tableau1 extends Phaser.Scene {
         this.musicBg.play()
         this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
-
+        this.startF()
+        this.controle=new Controle()
     }
 
         initKeyboard(){
             let me = this
             this.input.keyboard.on('keydown', function (kevent) {
                 switch (kevent.keyCode) {
-                    case Phaser.Input.Keyboard.KeyCodes.S:
-                            me.joueurGauche.playerpad.setVelocityY(-450)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.X:
-                        me.joueurGauche.playerpad.setVelocityY(450)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.J:
-                        me.joueurDroite.playerpad.setVelocityY(-450)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.N:
-                        me.joueurDroite.playerpad.setVelocityY(450)
-                        break;
-
                 }
             });
             this.input.keyboard.on('keyup', function (kevent) {
                 switch (kevent.keyCode) {
-                    case Phaser.Input.Keyboard.KeyCodes.S:
-                        me.joueurGauche.playerpad.setVelocityY(0)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.X:
-                        me.joueurGauche.playerpad.setVelocityY(0)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.J:
-                        me.joueurDroite.playerpad.setVelocityY(0)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.N:
-                        me.joueurDroite.playerpad.setVelocityY(0)
-                        break;
-                    case Phaser.Input.Keyboard.KeyCodes.R:
-                        me.resetScore()
-                        break;
+
                     case Phaser.Input.Keyboard.KeyCodes.SPACE:
                         if(me.start==0) {
                             me.startF()
@@ -174,14 +151,7 @@ class Tableau1 extends Phaser.Scene {
             if(Math.abs(this.Mball.ball.body.velocity.x>1800)){
                 this.lock=1
             }
-            if(this.joueurGauche.playerpad.y<=20){
-                this.joueurGauche.playerpad.y=20
 
-            }
-            if(this.joueurGauche.playerpad.y>=600){
-                this.joueurGauche.playerpad.y=600
-
-            }
             if(this.joueurDroite.playerpad.y<=20){
                 this.joueurDroite.playerpad.y=20
 
