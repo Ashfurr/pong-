@@ -82,10 +82,10 @@ class Tableau1 extends Phaser.Scene {
      this.musicBg.mute=false
      this.start=1
      if (this.start==1) {
-         this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80,$("#monte2"),
-             $("#descend2"))
-         this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180,$("#monte2"),
-             $("#descend2"))
+         this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80)
+
+         this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180)
+
          this.Mball = new Ball(this)
          this.wallUp= new Wall(this,0)
          this.wallDown= new Wall(this,700)
@@ -123,7 +123,7 @@ class Tableau1 extends Phaser.Scene {
         this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
         this.startF()
-        this.controle=new Controle()
+        this.controle=new Controle(this)
     }
 
         initKeyboard(){
