@@ -51,6 +51,9 @@ class Controle {
             if (event.key === "n") {
                 me.scene.joueurDroite.bougepas();
             }
+            if (event.key === "r") {
+                me.scene.resetScore();
+            }
             if (event.code==='Space') {
                 if(me.scene.start==0){
                     me.scene.start=1

@@ -9,7 +9,9 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('circle', 'asset/cercle.png')
         this.load.image('white', 'asset/white.png')
         this.load.image('effect', 'asset/effect.png')
+        this.load.image('bonus', 'asset/bonus.png')
         this.load.audio('music', ['asset/music.mp3'])
+        this.load.audio('pad_01', ['asset/pad_01.mp3'])
         this.load.atlas('flares', 'asset/flares.png', 'asset/flares.json');
 
     }
@@ -78,18 +80,29 @@ class Tableau1 extends Phaser.Scene {
    player.score ++;
        this.reset()
    }
-
+bonusFonction(){
+    this.bonus= new Bonus(this)
+}
     /**
      * calcul pour déterminer un coefficiant en fonction de la position ou frappe la balle sur la raquette
      * @param player
      */
  renvoie(player){
+        this.padS.play()
+        if(player.x==80){
+            this.detect=1
+        }
+        if(player.x==1180){
+            this.detect=0
+        }
+
+
          this.rando=this.Mball.ball.y-player.y
          this.coeff=this.rando/100
          this.coeff=this.coeff*10-5
          this.Mball.ball.setVelocityY(this.Mball.ball.body.velocity.y+this.coeff*50)
              if (this.lock==0) {
-         this.Mball.ball.setVelocityX(this.Mball.ball.body.velocity.x * 1.5)
+         this.Mball.ball.setVelocityX(this.Mball.ball.body.velocity.x * 1.05)
      }
         this.particlescolli()
  }
@@ -107,15 +120,18 @@ class Tableau1 extends Phaser.Scene {
          this.joueurDroite = new Joueur('Player 2', 'joueurDroite',this,1180)
          this.wallUp= new Wall(this,0)
          this.wallDown= new Wall(this,700)
-         let me = this
+         this.bonus= new Bonus(this)
          this.score = 0
      }
  }
     create() {
+        this.detect=0
         this.start=0
         this.Wscreen = 1280
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
+        this.padS=this.sound.add('pad_01')
+        this.padS.volume=0.1
         this.musicBg.mute=true
         this.musicBg.play()
         this.musicBg.volume=0.2
@@ -136,6 +152,7 @@ class Tableau1 extends Phaser.Scene {
             if(this.Mball.ball.x<-10){
                 this.win(this.joueurDroite)
             }
+
         }}
     }
 

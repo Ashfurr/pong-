@@ -39,14 +39,15 @@ class Joueur  {
     }
     bougepas(){
         this.playerpad.setVelocityY(0)
-        console.log('pressed')
+
     }
     limite(){
         if(this.playerpad.y<=20){
             this.playerpad.y=20
         }
-        if(this.playerpad.y>=600){
-            this.playerpad.y=600
+        if(this.playerpad.y+this.playerpad.height>700){
+            this.playerpad.y=700-this.playerpad.height
         }
     }
+
 }
