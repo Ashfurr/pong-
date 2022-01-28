@@ -14,10 +14,14 @@ class Joueur  {
         this._score = 0;
         this.name = name;
         this.htmlId = scoreId;
-        this.playerpad=this.Tableau2.physics.add.sprite(x,300,'square2').setOrigin(0.0)
+        this.playerpad=this.Tableau2.physics.add.sprite(x,310,'square2').setOrigin(0.0)
         this.playerpad.body.setSize(40,100)
         this.playerpad.setImmovable(true)
         this.playerpad.setVelocityY(0)
+        let me=this
+        this.Tableau2.physics.add.collider(this.playerpad, this.Tableau2.Mball.ball, function () {
+            me.Tableau2.renvoie(me.playerpad)
+        })
 
 
         this.$el = document.getElementById(scoreId);
@@ -26,16 +30,16 @@ class Joueur  {
         this.$name.textContent=name;
     }
     monte(){
-        this.$boutonMonte.addClass("flash");
+
         this.playerpad.setVelocityY(-450)
     }
     descend(){
-        this.$boutonDescend.addClass("flash");
+
         this.playerpad.setVelocityY(450)
     }
     bougepas(){
-        this.$boutonMonte.add(this.$boutonDescend).removeClass("flash");
         this.playerpad.setVelocityY(0)
+        console.log('pressed')
     }
     limite(){
         if(this.playerpad.y<=20){

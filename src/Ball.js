@@ -6,6 +6,7 @@ class Ball  {
         this.ball.setVelocityX(Math.random() > 0.5 ? -200 : 200)
         this.ball.setBounce(1, 1)
         this.ball.visible = false
+
         let particles2 = this.scene.add.particles('flares');
         let particle = particles2.createEmitter({
             alpha: {start: 1, end: 0},
@@ -18,5 +19,13 @@ class Ball  {
             y: this.ball.y
         });
         particle.startFollow(this.ball)
+    }
+    /**
+     * acceleration de la balle par rebond que l'on bloque sinon la balle finis par traverser les hitbox
+     */
+    limiteB(){
+        if(Math.abs(this.scene.Mball.ball.body.velocity.x>1800)){
+            this.scene.lock=1
+        }
     }
 }
