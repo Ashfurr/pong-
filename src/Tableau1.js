@@ -113,7 +113,6 @@ bonusFonction(){
  startF(){
         this.lock=0
         this.text.destroy()
-        this.musicBg.mute=false
      if (this.start==1) {
          this.Mball = new Ball(this)
          this.joueurGauche = new Joueur('Player 1', 'joueurGauche',this,80)
@@ -132,8 +131,6 @@ bonusFonction(){
         this.musicBg=this.sound.add('music')
         this.padS=this.sound.add('pad_01')
         this.padS.volume=0.1
-        this.musicBg.mute=true
-        this.musicBg.play()
         this.musicBg.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
         this.controle=new Controle(this)

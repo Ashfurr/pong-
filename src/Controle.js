@@ -56,8 +56,10 @@ class Controle {
             }
             if (event.code==='Space') {
                 if(me.scene.start==0){
-                    me.scene.start=1
-               me.scene.startF()}
+                    me.scene.musicBg.play();
+                    me.scene.start=1;
+                    me.scene.startF();
+                }
             }
             event.preventDefault(); // je n'explique pas à quoi ça sert ça vous embrouillerait sans raison
         }, true);
