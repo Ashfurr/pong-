@@ -11,6 +11,7 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('effect', 'asset/effect.png')
         this.load.image('bonus', 'asset/bonus.png')
         this.load.audio('music', ['asset/music.mp3'])
+        this.load.audio('bound', ['asset/bound.mp3'])
         this.load.audio('pad_01', ['asset/pad_01.mp3'])
         this.load.atlas('flares', 'asset/flares.png', 'asset/flares.json');
 
@@ -130,8 +131,10 @@ bonusFonction(){
         this.Hscreen = 720
         this.musicBg=this.sound.add('music')
         this.padS=this.sound.add('pad_01')
+        this.bound=this.sound.add('bound')
         this.padS.volume=0.1
         this.musicBg.volume=0.2
+        this.bound.volume=0.2
         this.text=this.add.text(this.Wscreen/2-300, 350, 'Press Space To Start').setOrigin(0,0).setFontSize(50)
         this.controle=new Controle(this)
     }

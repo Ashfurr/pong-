@@ -20,15 +20,16 @@ class Bonus {
 
     touchBonus() {
         this.stars.destroy()
-        if(this.scene.detect==1&this.scene.joueurGauche.playerpad.height<300 ){
+        if(this.scene.detect==1&this.scene.joueurGauche.playerpad.height<400 ){
             this.scene.joueurGauche.playerpad.setDisplaySize(20,this.scene.joueurGauche.playerpad.height+10)
             this.scene.joueurGauche.playerpad.height+=10
         }
-        if(this.scene.detect==0&this.scene.joueurDroite.playerpad.height<300 ){
+        if(this.scene.detect==0&this.scene.joueurDroite.playerpad.height<400 ){
             this.scene.joueurDroite.playerpad.setDisplaySize(20,this.scene.joueurDroite.playerpad.height+10)
             this.scene.joueurDroite.playerpad.height+=10
         }
         this.scene.bonusFonction()
+        this.scene.bound.play()
 
     }
 
